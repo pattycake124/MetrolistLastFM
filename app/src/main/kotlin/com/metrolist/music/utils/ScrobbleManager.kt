@@ -109,7 +109,7 @@ class ScrobbleManager(
     private fun scrobbleSong(metadata: MediaMetadata) {
         scope.launch {
             LastFM.scrobble(
-                artist = metadata.artists.joinToString { it.name },
+                artist = metadata.artists.firstOrNull()?.name ?: "",
                 track = metadata.title,
                 duration = metadata.duration,
                 timestamp = songStartedAt,
@@ -121,7 +121,7 @@ class ScrobbleManager(
     private fun updateNowPlaying(metadata: MediaMetadata) {
         scope.launch {
             LastFM.updateNowPlaying(
-                artist = metadata.artists.joinToString { it.name },
+                artist = metadata.artists.firstOrNull()?.name ?: "",
                 track = metadata.title,
                 album = metadata.album?.title,
                 duration = metadata.duration
